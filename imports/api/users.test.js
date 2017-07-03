@@ -4,7 +4,7 @@ import expect from 'expect';
 import { validateNewUser } from './users';
 
 if (Meteor.isServer) {
-  describe('users', () => {
+  describe('Users', () => {
 
     it('should allow valid email address', () => {
       const testUser = {
