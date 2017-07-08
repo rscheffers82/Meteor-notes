@@ -31,10 +31,10 @@ if(Meteor.isServer) {
       }).toThrow();
     });
 
-    it('should remove note', () => {
+    it('should remove note', function() {
       // apply (first argument sets the context, the this)
       // 2nd argument is an array with each value being the argument passed into the function that is called.
-      Meteor.server.method_handles['notes.remove'].apply({ userId: 'roy123' }, ['testNoteId1']);
+      Meteor.server.method_handlers['notes.remove'].apply({ userId: 'roy123' }, ['testNoteId1']);
       expect(Notes.findOne({ _id: 'testNoteId1' })).toNotExist();
     });
   });

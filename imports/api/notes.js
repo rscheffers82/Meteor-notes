@@ -28,7 +28,7 @@ Meteor.methods({
         type: String,
         min: 1
       }
-    }).validate( _id );
+    }).validate({ _id });
 
     Notes.remove({ _id, userId: this.userId });
   }
