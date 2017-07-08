@@ -31,11 +31,23 @@ if(Meteor.isServer) {
       }).toThrow();
     });
 
-    it('should remove note', function() {
+    it('should remove note', () => {
       // apply (first argument sets the context, the this)
       // 2nd argument is an array with each value being the argument passed into the function that is called.
       Meteor.server.method_handlers['notes.remove'].apply({ userId: 'roy123' }, ['testNoteId1']);
       expect(Notes.findOne({ _id: 'testNoteId1' })).toNotExist();
+    });
+
+    it('should not remove note if not authenticated', () => {
+      expect(() => {
+        Meteor.server.method_handlers['notes.remove'].apply({}, ['testNoteId1']);
+      }).toThrow();
+    });
+    
+    it('should not remove note if invalid note _id', () => {
+      expect(() => {
+        Meteor.server.method_handlers['notes.remove'].apply({ userId: 'roy123' }, ['']);
+      }).toThrow();
     });
   });
 }
