@@ -55,7 +55,10 @@ Meteor.methods({
       ...updates      // spread out updates will throw an error if additional properties are added
     });
 
-    Notes.update( _id, {
+    Notes.update({
+      _id,
+      userId: this.userId
+    }, {
       $set: {
         updatedAt: moment().valueOf(),
         ...updates // updates contains only title, body or both

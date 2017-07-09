@@ -2,13 +2,14 @@ import { Meteor } from 'meteor/meteor';
 import expect from 'expect';
 
 import { Notes } from './notes';
+
 if(Meteor.isServer) {
   describe('Notes', () => {
 
     const noteOne = {
       _id: 'testNoteId1',
-      title: 'My Title',
-      body: 'This is the body of the note',
+      title: 'First set Title',
+      body: 'This is the initial body of the note',
       updatedAt: 123,
       userId: 'roy123'
     };
@@ -50,7 +51,7 @@ if(Meteor.isServer) {
       }).toThrow();
     });
 
-    it('should not remove note if no invalid note _id', () => {
+    it('should not remove note if invalid note _id', () => {
       expect(() => {
         Meteor.server.method_handlers['notes.remove'].apply({ userId: noteOne.userId });
       }).toThrow();
@@ -78,6 +79,29 @@ if(Meteor.isServer) {
       };
       expect(() => {
         Meteor.server.method_handlers['notes.update'].apply({ userId: noteOne.userId }, [noteOne._id, updates]);
+      }).toThrow();
+    });
+
+    it('should not update note if user was not the creator', () => {
+      const userId = 12345;
+      const title = 'My new title';
+
+      Meteor.server.method_handlers['notes.update'].apply({ userId }, [noteOne._id, { title }]);
+
+      const res = Notes.findOne({ _id: noteOne._id });
+      // assert that the note remains the same
+      expect(res).toInclude(noteOne);
+    });
+
+    it('should not update note if unauthenticated', () => {
+      expect(() => {
+        Meteor.server.method_handlers['notes.update'].apply({}, [noteOne._id]);
+      }).toThrow();
+    });
+
+    it('should not update note if invalid note _id', () => {
+      expect(() => {
+        Meteor.server.method_handlers['notes.update'].apply({ userId: noteOne.userId });
       }).toThrow();
     });
   });
