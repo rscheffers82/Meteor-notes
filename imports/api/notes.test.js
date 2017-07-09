@@ -43,10 +43,10 @@ if(Meteor.isServer) {
         Meteor.server.method_handlers['notes.remove'].apply({}, ['testNoteId1']);
       }).toThrow();
     });
-    
+
     it('should not remove note if invalid note _id', () => {
       expect(() => {
-        Meteor.server.method_handlers['notes.remove'].apply({ userId: 'roy123' }, ['']);
+        Meteor.server.method_handlers['notes.remove'].apply({ userId: 'roy123' });
       }).toThrow();
     });
   });
