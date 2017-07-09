@@ -18,6 +18,8 @@ if(Meteor.isServer) {
       Notes.insert(noteOne);
     });
 
+    // insert test cases
+    // ----------------------------------------------
     it('should insert new note', () => {
       const userId = 12345;
       // use apply to call the function with this being {} object
@@ -33,6 +35,8 @@ if(Meteor.isServer) {
       }).toThrow();
     });
 
+    // remove test cases
+    // ----------------------------------------------
     it('should remove note', () => {
       // apply (first argument sets the context, the this)
       // 2nd argument is an array with each value being the argument passed into the function that is called.
@@ -49,6 +53,31 @@ if(Meteor.isServer) {
     it('should not remove note if no invalid note _id', () => {
       expect(() => {
         Meteor.server.method_handlers['notes.remove'].apply({ userId: noteOne.userId });
+      }).toThrow();
+    });
+
+    // update test cases
+    // ----------------------------------------------
+    it('it should update note', () => {
+      const title = 'My Title';
+
+      Meteor.server.method_handlers['notes.update'].apply({ userId: noteOne.userId }, [noteOne._id, { title }]);
+
+      const res = Notes.findOne({ _id: noteOne._id });
+
+      expect(res.updatedAt).toBeGreaterThan(noteOne.updatedAt);
+      expect(res).toInclude({
+        title,
+        body: noteOne.body
+      });
+    });
+
+    it('it should throw and error if extra properties are added to updates', () => {
+      const updates = {
+        name: 'Roy Scheffers'
+      };
+      expect(() => {
+        Meteor.server.method_handlers['notes.update'].apply({ userId: noteOne.userId }, [noteOne._id, updates]);
       }).toThrow();
     });
   });
