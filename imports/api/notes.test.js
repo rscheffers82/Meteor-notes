@@ -13,10 +13,18 @@ if(Meteor.isServer) {
       updatedAt: 123,
       userId: 'roy123'
     };
+    const noteTwo = {
+      _id: 'testNoteId2',
+      title: 'Title of the 2nd note',
+      body: 'Get new shoes',
+      updatedAt: 246,
+      userId: 'zorana123'
+    };
 
     beforeEach(function () {
       Notes.remove({});
       Notes.insert(noteOne);
+      Notes.insert(noteTwo);
     });
 
     // insert test cases
@@ -104,5 +112,22 @@ if(Meteor.isServer) {
         Meteor.server.method_handlers['notes.update'].apply({ userId: noteOne.userId });
       }).toThrow();
     });
+
+    it('should return a users note', () => {
+      // Meteor.server.publish_handlers['notes'].apply(); -> the same as the below
+      const res = Meteor.server.publish_handlers.notes.apply({ userId: 'zorana123' });
+      const notes = res.fetch();
+
+      expect(notes.length).toBe(1);
+      expect(notes[0]).toEqual(noteTwo);
+    });
+
+    it('should return zero notes for a user that has none ', () => {
+      const res = Meteor.server.publish_handlers.notes.apply({ userId: 'something-random' });
+      const notes = res.fetch();
+
+      expect(notes.length).toBe(0);
+    });
+
   });
 }
