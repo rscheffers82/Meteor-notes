@@ -3,7 +3,7 @@ import React from 'react';
 import expect from 'expect';
 import { mount } from 'enzyme';
 
-import PrivateHeader from './PrivateHeader';
+import { PrivateHeader } from './PrivateHeader';
 
 if (Meteor.isClient) {
   describe('PrivateHeader', () => {
@@ -40,5 +40,3 @@ if (Meteor.isClient) {
     });
   });
 }
-
-git commit -am 'add client test case of PrivateHeader logout functionality'
