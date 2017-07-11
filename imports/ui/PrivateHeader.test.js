@@ -27,7 +27,7 @@ if (Meteor.isClient) {
       spy(3,11);
       // expect(spy).toHaveBeenCalled();
       // expect(spy).toNotHaveBeenCalled();
-      debugger;
+      // debugger;
       expect(spy).toHaveBeenCalledWith(3, 11);
     });
 
