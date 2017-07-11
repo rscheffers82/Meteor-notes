@@ -22,13 +22,14 @@ if (Meteor.isClient) {
       expect(headerTitle).toBe(title);
     });
 
-    // it('should call the function (to test spies)', () => {
-    //   const spy = expect.createSpy();
-    //   spy(3,11);
-    //   // expect(spy).toHaveBeenCalled();
-    //   // expect(spy).toNotHaveBeenCalled();
-    //   expect(spy).toHaveBeenCalledWith(3, 11);
-    // });
+    it('should call the function (to test spies)', () => {
+      const spy = expect.createSpy();
+      spy(3,11);
+      // expect(spy).toHaveBeenCalled();
+      // expect(spy).toNotHaveBeenCalled();
+      debugger;
+      expect(spy).toHaveBeenCalledWith(3, 11);
+    });
 
     it('should call handleLogout on click', () => {
       const spy = expect.createSpy();
