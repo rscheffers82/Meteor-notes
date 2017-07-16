@@ -1,5 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Session } from 'meteor/session';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Notes } from '../api/notes';
@@ -24,11 +25,17 @@ NoteList.propTypes = {
 };
 
 export default createContainer(() => {
+  const selectedNoteId = Session.get('selectedNoteId');
   Meteor.subscribe('notes');
 
   // anything returned from createContainer will become props on the component.
   // createContainer is like tracker.autorun, when anything changes the component is re-rendered
   return {
-    notes: Notes.find({}).fetch()
+    notes: Notes.find({}).fetch().map((note) => {
+      return {
+        ...note,
+        selected: note._id === selectedNoteId
+      }
+    })
   }
 }, NoteList);
