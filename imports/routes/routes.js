@@ -43,12 +43,24 @@ export const onAuthChange = (isAuthenticated) => {
   console.log('isAuthenticated: ', isAuthenticated);
 };
 
+export const globalOnChange = (prevState, nextState) => {
+  globalOnEnter(nextState);
+};
+
+export const globalOnEnter = (nextState) => {
+  const lastRoute = nextState.routes[nextState.routes.length - 1];
+  Session.set('currentPagePrivacy', lastRoute.privacy);
+};
+
+// privacy on below routes is a prop that isn't in the docs and self defined for own purposes
 export const routes = (
   <Router history={browserHistory}>
-    <Route path="/" component={Login} onEnter={onEnterPublicPage}/>
-    <Route path="/signup" component={Signup} onEnter={onEnterPublicPage}/>
-    <Route path="/dashboard" component={Dashboard} onEnter={onEnterPrivatePage}/>
-    <Route path="/dashboard/:id" component={Dashboard} onEnter={onEnterNotePage}/>
-    <Route path="*" component={NotFound} />
+    <Route onEnter={globalOnEnter} onChange={globalOnChange}>
+      <Route path="/" component={Login} privacy="unauth" onEnter={onEnterPublicPage}/>
+      <Route path="/signup" component={Signup} privacy="unauth" onEnter={onEnterPublicPage}/>
+      <Route path="/dashboard" component={Dashboard} privacy="auth" onEnter={onEnterPrivatePage}/>
+      <Route path="/dashboard/:id" component={Dashboard} privacy="auth" onEnter={onEnterNotePage}/>
+      <Route path="*" component={NotFound} />
+    </Route>
   </Router>
 );
