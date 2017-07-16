@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { createContainer } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 
 import { Notes } from '../api/notes';
 
@@ -25,6 +26,11 @@ export class Editor extends Component {
     this.setState({ body });
     this.props.call('notes.update', selectedNoteId, { body });
   }
+  handleRemoval() {
+    const { selectedNoteId } = this.props;
+    this.props.call('notes.remove', selectedNoteId);
+    this.props.browserHistory.push('/dashboard');
+  }
   componentDidUpdate(prevProps, prevState) {
     const currentNoteId = this.props.note ? this.props.note._id : undefined;
     const prevNoteId = prevProps.note ? prevProps.note._id : undefined;
@@ -44,7 +50,7 @@ export class Editor extends Component {
         <div>
           <input type="text" value={title} onChange={this.handleTitleChange.bind(this)}/>
           <textarea value={body} placeholder="Your note here" onChange={this.handleBodyChange.bind(this)}></textarea>
-          <button>Delete Note</button>
+          <button onClick={this.handleRemoval.bind(this)}>Delete Note</button>
         </div>
       );
     } else {
@@ -61,6 +67,7 @@ Editor.propTypes = {
   note: React.PropTypes.object,
   selectedNoteId: React.PropTypes.string,
   call: React.PropTypes.func.isRequired,
+  browserHistory: React.PropTypes.object.isRequired,
 };
 
 export default createContainer(() => {
@@ -68,6 +75,7 @@ export default createContainer(() => {
   return {
     selectedNoteId,
     note: Notes.findOne(selectedNoteId),
-    call: Meteor.call
+    call: Meteor.call,
+    browserHistory
   }
 }, Editor);
