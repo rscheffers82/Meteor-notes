@@ -6,23 +6,44 @@ import React, { Component } from 'react';
 import { Notes } from '../api/notes';
 
 export class Editor extends Component {
+  constructor(props){
+    super(props);
+    this.state= {
+      title: '',
+      body: ''
+    };
+  }
   handleTitleChange(e) {
     const { selectedNoteId, note } = this.props;
-    this.props.call('notes.update', selectedNoteId, { title: e.target.value });
+    const title = e.target.value;
+    this.setState({ title });
+    this.props.call('notes.update', selectedNoteId, { title });
   }
   handleBodyChange(e) {
     const { selectedNoteId, note } = this.props;
-    this.props.call('notes.update', selectedNoteId, {
-      body: e.target.value
-    });
+    const body = e.target.value;
+    this.setState({ body });
+    this.props.call('notes.update', selectedNoteId, { body });
+  }
+  componentDidUpdate(prevProps, prevState) {
+    const currentNoteId = this.props.note ? this.props.note._id : undefined;
+    const prevNoteId = prevProps.note ? prevProps.note._id : undefined;
+
+    if (currentNoteId && currentNoteId !== prevNoteId) {
+      this.setState({
+        title: this.props.note.title,
+        body: this.props.note.body
+      });
+    }
   }
   render() {
     const { selectedNoteId, note } = this.props;
+    const { title, body } = this.state;
     if (note) {
       return (
         <div>
-          <input type="text" value={note.title} onChange={this.handleTitleChange.bind(this)}/>
-          <textarea value={note.body} placeholder="Your note here" onChange={this.handleBodyChange.bind(this)}></textarea>
+          <input type="text" value={title} onChange={this.handleTitleChange.bind(this)}/>
+          <textarea value={body} placeholder="Your note here" onChange={this.handleBodyChange.bind(this)}></textarea>
           <button>Delete Note</button>
         </div>
       );
