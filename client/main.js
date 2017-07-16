@@ -12,8 +12,7 @@ Tracker.autorun(() => {
   const isAuthenticated = !!Meteor.userId();
   const currentPagePrivacy = Session.get('currentPagePrivacy');
 
-  console.log('currentPagePrivacy: ', currentPagePrivacy)
-  onAuthChange(isAuthenticated);
+  onAuthChange(isAuthenticated, currentPagePrivacy);
 });
 
 // when a different note is selected, update the url
