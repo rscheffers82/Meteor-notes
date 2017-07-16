@@ -7,12 +7,12 @@ import { Notes } from '../api/notes';
 
 export class Editor extends Component {
   handleTitleChange(e) {
-    const { selectedNoteId, note, call } = this.props;
-    call('notes.update', selectedNoteId, { title: e.target.value });
+    const { selectedNoteId, note } = this.props;
+    this.props.call('notes.update', selectedNoteId, { title: e.target.value });
   }
   handleBodyChange(e) {
     const { selectedNoteId, note } = this.props;
-    call('notes.update', selectedNoteId, {
+    this.props.call('notes.update', selectedNoteId, {
       body: e.target.value
     });
   }
@@ -39,7 +39,7 @@ export class Editor extends Component {
 Editor.propTypes = {
   note: React.PropTypes.object,
   selectedNoteId: React.PropTypes.string,
-  call: React.PropTypes.function.isRequired,
+  call: React.PropTypes.func.isRequired,
 };
 
 export default createContainer(() => {
