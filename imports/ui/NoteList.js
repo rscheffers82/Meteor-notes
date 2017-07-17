@@ -24,18 +24,23 @@ NoteList.propTypes = {
   notes: React.PropTypes.array.isRequired
 };
 
+// anything returned from createContainer will become props on the component.
+// createContainer is like tracker.autorun, when anything changes the component is re-rendered
+
 export default createContainer(() => {
   const selectedNoteId = Session.get('selectedNoteId');
+
   Meteor.subscribe('notes');
 
-  // anything returned from createContainer will become props on the component.
-  // createContainer is like tracker.autorun, when anything changes the component is re-rendered
   return {
-    notes: Notes.find({}).fetch().map((note) => {
-      return {
-        ...note,
-        selected: note._id === selectedNoteId
-      }
-    })
-  }
+    notes: Notes.find({}, {
+      sort: { updatedAt: -1
+    }
+  }).fetch().map((note) => {
+    return {
+      ...note,
+      selected: note._id === selectedNoteId
+    };
+  })
+}
 }, NoteList);
