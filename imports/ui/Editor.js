@@ -47,7 +47,7 @@ export class Editor extends Component {
     const { title, body } = this.state;
     if (note) {
       return (
-        <div>
+        <div className="editor">
           <input type="text" value={title} onChange={this.handleTitleChange.bind(this)}/>
           <textarea value={body} placeholder="Your note here" onChange={this.handleBodyChange.bind(this)}></textarea>
           <button onClick={this.handleRemoval.bind(this)}>Delete Note</button>
@@ -55,9 +55,11 @@ export class Editor extends Component {
       );
     } else {
       return (
-        <p>
-          { selectedNoteId ? 'Note not found.' : 'Pick or create a note to get started.' }
-        </p>
+        <div className="editor">
+          <p>
+            { selectedNoteId ? 'Note not found.' : 'Pick or create a note to get started.' }
+          </p>
+        </div>
       );
     }
   }
