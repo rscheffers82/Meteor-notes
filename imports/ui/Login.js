@@ -28,7 +28,13 @@ export class Login extends Component {
       <div className="boxed-view">
         <div className="boxed-view__box">
           <h1>Login</h1>
-
+          <p>
+            Wanna try? Login as guest!
+          </p>
+          <p>
+            Email: <i>guest@gmail.com</i><br />
+            Password: <i>guest123!</i>
+          </p>
           {this.state.error ? <p>{this.state.error}</p> : undefined}
 
           <form onSubmit={this.onSubmit.bind(this)} noValidate className="boxed-view__form">
