@@ -1,6 +1,6 @@
 ## Notes | a Meteor React project
 
-![RS Notes | Mobile responsive app build on Meteor & React](https://github.com/rscheffers82/Meteor-notes/blob/master/public/responsive-overview-notes.jpg?raw=1)
+![RS Notes | Mobile responsive app build on Meteor & React](https://github.com/rscheffers82/Meteor-notes/blob/master/public/images/responsive-overview-notes.jpg?raw=1)
 
 An app that lets you create notes.
 
