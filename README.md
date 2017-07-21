@@ -1,17 +1,27 @@
-# Notes | build on Meteor & React
+# Notes | built on Meteor & React
 
-![RS Notes | Mobile responsive app build on Meteor & React](https://github.com/rscheffers82/Meteor-notes/blob/master/public/images/responsive-overview-notes.jpg?raw=1)
+![RS Notes | Mobile responsive app built on Meteor & React](https://github.com/rscheffers82/Meteor-notes/blob/master/public/images/responsive-overview-notes.jpg?raw=1)
 
 ### Where can I see this in action?
 The app is deployed to Heroku, click [here](https://rs-notes.herokuapp.com) for a live demo.
 
 ### How to run the app locally?
-1. Clone this repo by clicking the above green button Clone or download.
-2. In your terminal type `npm start`
+
+This app requires you to have Meteor installed on your machine. Then you can clone the repo by clicking the above green button Clone. Once done run the following commands.
+```
+meteor npm install
+```
+```
+npm start
+```
 
 ### What about a test suite?
+
 Front-end, back-end and API tests are included.<br/>
-To run the suite type `npm test`
+Running the tests is easy. All you have to do is run the following command and view the reporter at localhost port 3000.
+```
+npm test
+```
 
 ### I like what I see, show me more!
 Many of my prior public projects are in my portfolio. Check it out at [royscheffers.com](http://royscheffers.com/#portfolio).
