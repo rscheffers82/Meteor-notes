@@ -18,6 +18,7 @@ Tracker.autorun(() => {
 // when a different note is selected, update the url
 Tracker.autorun(() => {
   const selectedNoteId = Session.get('selectedNoteId');
+  Session.set('isNavOpen', false);
 
   if (selectedNoteId) {
     browserHistory.replace(`/dashboard/${selectedNoteId}`);
