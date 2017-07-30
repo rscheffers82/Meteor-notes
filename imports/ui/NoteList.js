@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -21,7 +22,7 @@ export const NoteList = (props) => {
 };
 
 NoteList.propTypes = {
-  notes: React.PropTypes.array.isRequired
+  notes: PropTypes.array.isRequired
 };
 
 // anything returned from createContainer will become props on the component.

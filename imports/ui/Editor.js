@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { createContainer } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 
 import { Notes } from '../api/notes';
@@ -68,10 +69,10 @@ export class Editor extends Component {
 };
 
 Editor.propTypes = {
-  note: React.PropTypes.object,
-  selectedNoteId: React.PropTypes.string,
-  call: React.PropTypes.func.isRequired,
-  browserHistory: React.PropTypes.object.isRequired,
+  note: PropTypes.object,
+  selectedNoteId: PropTypes.string,
+  call: PropTypes.func.isRequired,
+  browserHistory: PropTypes.object.isRequired,
 };
 
 export default createContainer(() => {
